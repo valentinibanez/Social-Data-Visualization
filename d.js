@@ -11,7 +11,7 @@ var projection = d3.geo.mercator()
 //path generator
 var path = d3.geo.path().projection(projection);
 //Create SVG element
-var svg = d3.select("#vis")
+var dVis = d3.select("#vis")
     .append("svg")
     .attr("width", w)
     .attr("height", h);
@@ -19,7 +19,7 @@ var svg = d3.select("#vis")
 d3.json("https://raw.githubusercontent.com/suneman/socialdataanalysis2016/master/files/sfpddistricts.geojson", function(json) {
 
     //Bind data and create one path per GeoJSON feature
-    svg.selectAll("path")
+    dVis.selectAll("path")
         .data(json.features)
         .enter()
         .append("path")
@@ -28,7 +28,7 @@ d3.json("https://raw.githubusercontent.com/suneman/socialdataanalysis2016/master
 });
 var border = 1;
 var bordercolor = 'black';
-var borderPath = svg.append("rect")
+var borderPath = dVis.append("rect")
     .attr("x", 0)
     .attr("y", 0)
     .attr("height", h)
