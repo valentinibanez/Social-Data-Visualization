@@ -22,7 +22,7 @@
     <div id="b">
         <h1>2B: One scatter plot and two datasets</h1>
         <p>
-            Toggle data between 2003 and 2015
+            <b>Use the switch to toggle data between 2003 and 2015</b> - the size of the circles represent the total amount of crimes in a PdDistric relative to eachother.
         </p>
         <div class="onoffswitch">
             <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="toggleDate" checked>
@@ -32,6 +32,12 @@
             </label>
         </div>
         <script type="text/javascript" src="b.js"></script>
+        <h2>Static axis</h2>
+        <p>
+            Because the idea of the plot is to compare crime data between 2003 and 2015, it is important that the axis act as a point of reference.
+            If the scale of the axis would change according to each dataset then it would be confusing to the viewer what message the plots are conveying,
+            since we mostly rely on our ability to understand geometry to analyze our surroundings.
+        </p>
     </div>
     <div id="c">
         <h1>2C: One barchart and (at least) two datasets</h1>
