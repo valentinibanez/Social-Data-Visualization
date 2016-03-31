@@ -5,120 +5,253 @@
  //Width and height
  var w = 500;
  var h = 300;
- var padding = 30;
+ var padding = 70;
 
  //Dynamic, random dataset
  var dataset = []; //Initialize empty array
+ var crimeCount = [];
  var numDataPoints = 50; //Number of dummy data points to create
  var maxRange = Math.random() * 1000; //Max range of new values
- for (var i = 0; i < numDataPoints; i++) { //Loop numDataPoints times
-     var newNumber1 = Math.floor(Math.random() * maxRange); //New random integer
-     var newNumber2 = Math.floor(Math.random() * maxRange); //New random integer
-     dataset.push([newNumber1, newNumber2]); //Add new number to array
- }
+ var dataToggler = 1;
+ // svg and svg variables
+ var xScale;
+ var yScale;
+ var rScale;
+ var xAxis;
+ var yAxis;
+ var svg;
 
- //Create scale functions
- var xScale = d3.scale.linear()
-     .domain([0, d3.max(dataset, function(d) {
-         return d[0];
-     })])
-     .range([padding, w - padding * 2]);
-
- var yScale = d3.scale.linear()
-     .domain([0, d3.max(dataset, function(d) {
-         return d[1];
-     })])
-     .range([h - padding, padding]);
-
- //Define X axis
- var xAxis = d3.svg.axis()
-     .scale(xScale)
-     .orient("bottom")
-     .ticks(5);
-
- //Define Y axis
- var yAxis = d3.svg.axis()
-     .scale(yScale)
-     .orient("left")
-     .ticks(5);
-
- //Create SVG element
- var svg = d3.select("body")
-     .append("svg")
-     .attr("width", w)
-     .attr("height", h);
-
- //Create circles
- svg.selectAll("circle")
-     .data(dataset)
-     .enter()
-     .append("circle")
-     .attr("cx", function(d) {
-         return xScale(d[0]);
-     })
-     .attr("cy", function(d) {
-         return yScale(d[1]);
-     })
-     .attr("r", 2);
-
- //Create X axis
- svg.append("g")
-     .attr("class", "x axis")
-     .attr("transform", "translate(0," + (h - padding) + ")")
-     .call(xAxis);
-
- //Create Y axis
- svg.append("g")
-     .attr("class", "y axis")
-     .attr("transform", "translate(" + padding + ",0)")
-     .call(yAxis);
+ // initiate scatterplot with data
+ d3.csv("2003T.csv", function(data) {
+    dataset = data.map(function(d) { return [ +d["PROSTITUTION"], +d["VEHICLE_THEFT"], +d["total"] , d["PdDistrict"]]; });
+    console.log(dataset);
+ xScale = d3.scale.linear()
+         .domain([0, d3.max(dataset, function(d) {
+             return d[0];
+         })])
+         .range([padding, w - padding * 2]);
 
 
+ yScale = d3.scale.linear()
+         .domain([0, d3.max(dataset, function(d) {
+             return d[1];
+         })])
+         .range([h - padding, padding]);
 
- //On click, update with new data
+ rScale = d3.scale.linear()
+         .domain([0, d3.max(dataset, function(d) {
+           return d[2]; })])
+         .range([2, 15]);
+
+ xAxis = d3.svg.axis()
+         .scale(xScale)
+         .orient("bottom")
+         .ticks(5);
+     //Define Y axis
+ yAxis = d3.svg.axis()
+         .scale(yScale)
+         .orient("left")
+         .ticks(5);
+     //Create SVG element
+ svg = d3.select("body")
+         .select("#b")
+         .append("svg")
+         .attr("width", w)
+         .attr("height", h);
+
+     //Create circles
+     svg.selectAll("circle")
+         .data(dataset)
+         .enter()
+         .append("circle")
+         .attr("cx", function(d) {
+             return xScale(d[0]);
+         })
+         .attr("cy", function(d) {
+             return yScale(d[1]);
+         })
+         .attr("r", function(d) {
+             return rScale(d[2]);
+         });
+
+     svg.selectAll("text") // append labels
+        .data(dataset)
+        .enter()
+        .append("text")
+        .text(function(d) {
+        return d[3];
+        })
+        .attr("x", function(d) {
+        return xScale(d[0]) + 15;
+        })
+        .attr("y", function(d) {
+        return yScale(d[1]);
+        })
+        .attr("font-family", "sans-serif")
+        .attr("font-size", "13px")
+        .attr("fill", "black");
+
+     //Create X axis
+     svg.append("g")
+         .attr("class", "x axis")
+         .attr("transform", "translate(0," + (h - padding) + ")")
+         .call(xAxis);
+
+     svg.append("text")      // text label for the x axis
+        .attr("x", w / 2 )
+        .attr("y",  h)
+        .style("text-anchor", "middle")
+        .text("PROSTITUTION");
+
+     //Create Y axis
+     svg.append("g")
+         .attr("class", "y axis")
+         .attr("transform", "translate(" + padding + ",0)")
+         .call(yAxis);
+
+     svg.append("text")
+             .attr("transform", "rotate(-90)")
+             .attr("y", 0)
+             .attr("x",0 - (h / 2))
+             .attr("dy", "1em")
+             .style("text-anchor", "middle")
+             .text("VEHICLE_THEFT");
+
+
+});
+
+
+ //On click, toggle between datasets
  d3.select("#toggleDate")
      .on("click", function() {
-
-         //New values for dataset
-         var numValues = dataset.length; //Count original length of dataset
-         var maxRange = Math.random() * 1000; //Max range of new values
-         dataset = []; //Initialize empty array
-         for (var i = 0; i < numValues; i++) { //Loop numValues times
-             var newNumber1 = Math.floor(Math.random() * maxRange); //New random integer
-             var newNumber2 = Math.floor(Math.random() * maxRange); //New random integer
-             dataset.push([newNumber1, newNumber2]); //Add new number to array
+         if(dataToggler == 1)
+         {
+           transistionTo2015();
+           dataToggler = 2;
          }
+         else
+         {
+           transistionTo2003();
+           dataToggler = 1;
+         }
+         //New values for dataset
 
-         //Update scale domains
-         xScale.domain([0, d3.max(dataset, function(d) {
-             return d[0];
-         })]);
-         yScale.domain([0, d3.max(dataset, function(d) {
-             return d[1];
-         })]);
 
-         //Update all circles
-         svg.selectAll("circle")
-             .data(dataset)
-             .transition()
-             .duration(1000)
-             .attr("cx", function(d) {
-                 return xScale(d[0]);
-             })
-             .attr("cy", function(d) {
-                 return yScale(d[1]);
-             });
+ });
 
-         //Update X axis
-         svg.select(".x.axis")
-             .transition()
-             .duration(1000)
-             .call(xAxis);
+ // transistion to 2015 data
+ var transistionTo2015 = function(){
+      d3.csv("2015T.csv", function(data) {
+        dataset = data.map(function(d) { return [ +d["PROSTITUTION"], +d["VEHICLE_THEFT"], +d["total"] , d["PdDistrict"]]; });
+        console.log(dataset);
+     xScale = d3.scale.linear()
+             .domain([0, d3.max(dataset, function(d) {
+                 return d[0];
+             })])
+             .range([padding, w - padding * 2]);
 
-         //Update Y axis
-         svg.select(".y.axis")
-             .transition()
-             .duration(1000)
-             .call(yAxis);
+
+     yScale = d3.scale.linear()
+             .domain([0, d3.max(dataset, function(d) {
+                 return d[1];
+             })])
+             .range([h - padding, padding]);
+
+     rScale = d3.scale.linear()
+             .domain([0, d3.max(dataset, function(d) {
+               return d[2]; })])
+             .range([2, 15]);
+     //Update all circles
+     svg.selectAll("circle")
+         .data(dataset)
+         .transition()
+         .duration(1000)
+         .attr("cx", function(d) {
+             return xScale(d[0]);
+         })
+         .attr("cy", function(d) {
+             return yScale(d[1]);
+         })
+         .attr("r", function(d) {
+             return rScale(d[2]);
+         });
+
+     svg.selectAll("text") // append labels
+        .data(dataset)
+        .transition()
+        .duration(1000)
+        .text(function(d) {
+        return d[3];
+        })
+        .attr("x", function(d) {
+        return xScale(d[0]) + 15;
+        })
+        .attr("y", function(d) {
+        return yScale(d[1]);
+        })
+        .attr("font-family", "sans-serif")
+        .attr("font-size", "13px")
+        .attr("fill", "black");
+
+
+    });
+  }
+
+
+   // transistion to 2003 data
+  var transistionTo2003 = function(){
+       d3.csv("2003T.csv", function(data) {
+         dataset = data.map(function(d) { return [ +d["PROSTITUTION"], +d["VEHICLE_THEFT"], +d["total"] , d["PdDistrict"]]; });
+         console.log(dataset);
+      xScale = d3.scale.linear()
+              .domain([0, d3.max(dataset, function(d) {
+                  return d[0];
+              })])
+              .range([padding, w - padding * 2]);
+
+
+      yScale = d3.scale.linear()
+              .domain([0, d3.max(dataset, function(d) {
+                  return d[1];
+              })])
+              .range([h - padding, padding]);
+
+      rScale = d3.scale.linear()
+              .domain([0, d3.max(dataset, function(d) {
+                return d[2]; })])
+              .range([2, 15]);
+      //Update all circles
+      svg.selectAll("circle")
+          .data(dataset)
+          .transition()
+          .duration(1000)
+          .attr("cx", function(d) {
+              return xScale(d[0]);
+          })
+          .attr("cy", function(d) {
+              return yScale(d[1]);
+          })
+          .attr("r", function(d) {
+              return rScale(d[2]);
+          });
+
+      svg.selectAll("text") // append labels
+         .data(dataset)
+         .transition()
+         .duration(1000)
+         .text(function(d) {
+         return d[3];
+         })
+         .attr("x", function(d) {
+         return xScale(d[0]) + 15;
+         })
+         .attr("y", function(d) {
+         return yScale(d[1]);
+         })
+         .attr("font-family", "sans-serif")
+         .attr("font-size", "13px")
+         .attr("fill", "black");
+
 
      });
+   }
