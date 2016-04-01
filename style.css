@@ -52,3 +52,19 @@
 .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch {
     right: 0px;
 }
+.arrow-right{
+float: left;
+width: 0;
+height: 0;
+border-style: solid;
+border-width: 20px 0 20px 40px;
+border-color: transparent transparent transparent #007bff;
+}
+.arrow-left{
+float: left;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 20px 40px 20px 0;
+  border-color: transparent #007bff transparent transparent;
+}

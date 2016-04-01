@@ -7,7 +7,7 @@ var w = 500;
 var h = 300;
 var padding = 70;
 
-//Dynamic, random dataset
+//Dynamic, random dataset//
 var dataset = []; //Initialize empty array
 var crimeCount = [];
 var numDataPoints = 50; //Number of dummy data points to create
@@ -21,7 +21,7 @@ var xAxis;
 var yAxis;
 var svg;
 
-// initiate scatterplot with data
+// initiate scatterplot with data//
 d3.csv("2003T.csv", function(data) {
     dataset = data.map(function(d) { return [+d["PROSTITUTION"], +d["VEHICLE_THEFT"], +d["total"], d["PdDistrict"]]; });
 
@@ -131,7 +131,7 @@ d3.csv("2003T.csv", function(data) {
 });
 
 
-//On click, toggle between datasets
+//On click, toggle between datasets//
 d3.select("#toggleDate")
     .on("click", function() {
         if (dataToggler == 1) {
@@ -189,7 +189,7 @@ var transistionTo2015 = function() {
 }
 
 
-// transistion to 2003 data
+// transistion to 2003 data//
 var transistionTo2003 = function() {
     d3.csv("2003T.csv", function(data) {
         dataset = data.map(function(d) { return [+d["PROSTITUTION"], +d["VEHICLE_THEFT"], +d["total"], d["PdDistrict"]]; });
