@@ -57,7 +57,7 @@ container = d3.select("body")
   .style("margin", "5px")
   .attr("id", "chartContainer");
 
-d3.csv("ViolentCrimesAll.csv", function(data) {
+d3.csv("data/violentCrimesAll.csv", function(data) {
   datasetVC = data.map(function(d) { return [d["Category"], +d["2010"], +d["2011"], +d["2012"], +d["2013"], +d["2014"], +d["2015"],]; });
 
   for (i = 0; i < datasetVC.length; i++){
