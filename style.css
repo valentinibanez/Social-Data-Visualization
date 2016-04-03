@@ -72,3 +72,18 @@ float: left;
 .fun {
     color: transparent;
 }
+
+svg {
+    display: block;
+    margin: auto;
+}
+
+body {
+  text-align: center;
+ }
+
+#wrapper {
+  text-align: left;
+  width: 800px;
+  margin: 0 auto;
+}
