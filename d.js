@@ -76,7 +76,6 @@ function plotProstitution(input) {
             .data(dataset)
             .enter()
             .append("circle")
-            .transition()  // Transition from old to new
             .attr("cx", function(d) {
                 return projection([d[0], d[1]])[0];
             })
