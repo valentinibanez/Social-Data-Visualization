@@ -51,10 +51,27 @@
     </div>
     <div id="c">
         <h2>2C: One barchart and (at least) two datasets</h2>
+        <p>
+            We will in this exercise look into the recorded crimes for each year from 2010 to 2015. 
+            We will do this by visualizing the recorded crimes in their respective category.
+            Each of the bars are thus a category from the data set.
+        </p>
+        <p>
+            <b>Use the blue arrows to switch between the views for each year</b> - The height of the bar chart represents the number of crimes.
+        </p>
         <script type="text/javascript" src="c.js"></script>
+        <p class="fun">FUN FACT. The total amount of crimes for both 2013 and 2015 is the exact same. Weird!</p>
     </div>
     <div id="d">
         <h2>2D: Visualizing geodata</h2>
+        <p>
+            For this exercise we made a map. The map is of San Francisco's police districts.
+            Overlayed on the map are recorded cases of prostitution classified belonging different clusters using the k-means clustering algorithm.
+        </p>
+        <p>
+            <b>Use the buttons to switch the number of clusters</b> - the color of the circles represent the cluster it belongs to. 
+            The nearest black circle is the centroid of the cluster.
+        </p>
         <div id="vis"></div>
         <script type="text/javascript" src="d.js"></script>
         <button type="button" onclick="updateKmeans(5)">Click to k = 6</button>

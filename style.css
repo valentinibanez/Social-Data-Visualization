@@ -68,3 +68,7 @@ float: left;
   border-width: 20px 40px 20px 0;
   border-color: transparent #007bff transparent transparent;
 }
+
+.fun {
+    color: transparent;
+}
