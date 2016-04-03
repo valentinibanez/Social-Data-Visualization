@@ -22,10 +22,10 @@ var yAxis;
 var svg;
 
 // initiate scatterplot with data//
-d3.csv("2003T.csv", function(data) {
+d3.csv("data/2003T.csv", function(data) {
     dataset = data.map(function(d) { return [+d["PROSTITUTION"], +d["VEHICLE_THEFT"], +d["total"], d["PdDistrict"]]; });
 
-    d3.csv("2015T.csv", function(data) {
+    d3.csv("data/2015T.csv", function(data) {
         dataset2 = data.map(function(d) { return [+d["PROSTITUTION"], +d["VEHICLE_THEFT"], +d["total"], d["PdDistrict"]]; });
         xScale = d3.scale.linear()
             .domain([0, d3.max([d3.max(dataset, function(d) {
@@ -148,7 +148,7 @@ d3.select("#toggleDate")
 
 // transistion to 2015 data
 var transistionTo2015 = function() {
-    d3.csv("2015T.csv", function(data) {
+    d3.csv("data/2015T.csv", function(data) {
         dataset = data.map(function(d) { return [+d["PROSTITUTION"], +d["VEHICLE_THEFT"], +d["total"], d["PdDistrict"]]; });
 
         //Update all circles
@@ -190,7 +190,7 @@ var transistionTo2015 = function() {
 
 // transistion to 2003 data//
 var transistionTo2003 = function() {
-    d3.csv("2003T.csv", function(data) {
+    d3.csv("data/2003T.csv", function(data) {
         dataset = data.map(function(d) { return [+d["PROSTITUTION"], +d["VEHICLE_THEFT"], +d["total"], d["PdDistrict"]]; });
 
 
