@@ -62,8 +62,7 @@ d3.csv("2003T.csv", function(data) {
             .orient("left")
             .ticks(5);
         //Create SVG element
-        svg = d3.select("body")
-            .select("#b")
+        svg = d3.select("#bVis")
             .append("svg")
             .attr("width", w)
             .attr("height", h);

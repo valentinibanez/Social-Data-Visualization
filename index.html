@@ -10,6 +10,11 @@
 <body>
     <div id="a">
         <h2>2A: Simple SVG stuff</h2>
+        <p>
+           In this exercise are we going to put something simple on the web. 
+           We will start with adding five squares with different colors and positions.
+           The result can be seen below.
+        </p>
         <script type="text/javascript" src="a.js"></script>
         <svg width="500" height="100" stroke="gray" stroke-width="2">
             <rect x="0" y="20" width="80" height="80" fill="rgba(128, 0, 128, 1.0)" />
@@ -22,6 +27,10 @@
     <div id="b">
         <h2>2B: One scatter plot and two datasets</h2>
         <p>
+            In this exercise you will see how the crime has evolved from 2003 to 2015 in San Francisco by way of this interactive scatterplot.
+            The labels are the police districts in San Francisco.
+        </p>
+        <p>
             <b>Use the switch to toggle data between 2003 and 2015</b> - the size of the circles represent the total amount of crimes in a PdDistric relative to eachother.
         </p>
         <div class="onoffswitch">
@@ -31,8 +40,9 @@
                 <span class="onoffswitch-switch"></span>
             </label>
         </div>
+        <div id="bVis"></div>
         <script type="text/javascript" src="b.js"></script>
-        <h2>Static axis</h2>
+        <h3>Static axis</h3>
         <p>
             Because the idea of the plot is to compare crime data between 2003 and 2015, it is important that the axis act as a point of reference.
             If the scale of the axis would change according to each dataset then it would be confusing to the viewer what message the plots are conveying,
