@@ -17,7 +17,7 @@ var dVis = d3.select("#vis")
     .attr("height", h);
 //Load in GeoJSON data
 d3.json("https://raw.githubusercontent.com/suneman/socialdataanalysis2016/master/files/sfpddistricts.geojson", function(json) {
-
+    console.log(json);
     //Bind data and create one path per GeoJSON feature
     dVis.selectAll("path")
         .data(json.features)
@@ -25,6 +25,22 @@ d3.json("https://raw.githubusercontent.com/suneman/socialdataanalysis2016/master
         .append("path")
         .attr("d", path)
         .style("fill", "rgb(90,140,180)");
+
+    dVis.selectAll("text")
+        .data(json.features)
+        .enter()
+        .append("svg:text")
+        .text(function(d) {
+            return d.properties.DISTRICT;
+        })
+        .attr("x", function(d) {
+            return path.centroid(d)[0];
+        })
+        .attr("y", function(d) {
+            return path.centroid(d)[1];
+        })
+        .attr("text-anchor", "middle")
+        .attr('font-size', '9pt');
 
     plotProstitution("kmeans6");
 });
@@ -45,7 +61,7 @@ function updateKmeans(set) {
 }
 
 function plotProstitution(input) {
-    dVis.append("text")
+    var label = dVis.append("text")
         .attr("x", 40)
         .attr("y", 40)
         .attr("dy", ".45em")
@@ -124,8 +140,7 @@ function plotProstitution(input) {
                 .style("stroke", 'black')
                 .style("fill", 'none');
 
-            dVis.selectAll("text")
-                .remove();
+            label.remove();
         });
 
     });
